@@ -31,6 +31,7 @@ fun InicioNavHost(drawerState: DrawerState) {
 
         composable(TelaUm.TELA_PERGUNTAS_ROUTE) { backStackEntry ->
             val infractionCode = backStackEntry.arguments?.getString("infractionCode") ?: ""
+
             TelaPerguntas(
                 infractionCode = infractionCode,
                 navCtrlBottomNav = navCtrlBottonNav, // Passa o navCtrlBottomNav corretamente
