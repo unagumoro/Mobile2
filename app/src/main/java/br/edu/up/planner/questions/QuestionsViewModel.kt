@@ -1,8 +1,8 @@
 package br.edu.up.planner.questions
 
 import androidx.lifecycle.ViewModel
-import androidx.compose.runtime.mutableStateOf
-import br.edu.up.planner.questions.Question
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 class QuestionsViewModel : ViewModel() {
 
@@ -19,9 +19,11 @@ class QuestionsViewModel : ViewModel() {
         )
     )
 
-    val selectedQuestions = mutableStateOf<List<Question>>(emptyList())
+    private val _selectedQuestions = MutableStateFlow<List<Question>>(emptyList())
+    val selectedQuestions: StateFlow<List<Question>> = _selectedQuestions
 
     fun loadQuestions(infractionCode: String) {
-        selectedQuestions.value = questionsMap[infractionCode] ?: emptyList()
+        _selectedQuestions.value = questionsMap[infractionCode] ?: emptyList()
     }
 }
+
