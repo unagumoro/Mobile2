@@ -18,8 +18,13 @@ fun TelaPerguntas(
     onFinish: (Map<Int, Boolean>) -> Unit,
     navCtrlBottomNav: NavController
 ) {
+
+    LaunchedEffect(infractionCode) {
+        questionsViewModel.loadQuestions(infractionCode)
+    }
+
     // Obter as perguntas do ViewModel
-    val questions = questionsViewModel.questions.collectAsState(initial = emptyList()).value // Aqui você coleta as perguntas
+    val questions = questionsViewModel.selectedQuestions.collectAsState().value
 
     // Map para armazenar as respostas (Sim ou Não)
     var respostas by remember { mutableStateOf(mapOf<Int, Boolean>()) }
@@ -35,7 +40,7 @@ fun TelaPerguntas(
         // Exibir as perguntas
         questions.forEachIndexed { index, question ->
             Column {
-                Text(text = "${index + 1}. ${question.pergunta}")
+                Text(text = "${index + 1}. ${question.questionText}")
                 val options = listOf("Sim", "Não") // Opções fixas para as respostas
                 options.forEach { option ->
                     Button(onClick = {
